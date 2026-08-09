@@ -1,0 +1,56 @@
+<div class="flex justify-content-center align-items-center min-h-screen w-full p-4">
+    <div class="w-full md:w-30rem">
+        <p-card>
+            <ng-template pTemplate="header">
+                <div class="pt-5 px-5">
+                    <h1 class="text-4xl md:text-5xl font-bold text-900 m-0 text-center">
+                        EventHub
+                    </h1>
+                    <p class="text-600 text-lg mt-3 mb-0 text-center">
+                        Organizza e vivi eventi straordinari
+                    </p>
+                </div>
+            </ng-template>
+            <form [formGroup]="loginForm" (ngSubmit)="login()" class="flex flex-column gap-4 p-3 md:p-5">
+                @if (errorMessage()) {
+                <p-message severity="error" [text]="errorMessage()" styleClass="w-full" />
+                }
+                <div class="flex flex-column gap-2">
+                    <label for="email" class="font-semibold text-900">
+                        Email
+                    </label>
+                    <input pInputText id="email" type="email" formControlName="email" placeholder="nome@email.com"
+                        autocomplete="email" class="w-full" />
+                    @if (isFieldInvalid('email')) {
+                    <small class="text-red-500">
+                        {{ getErrorMessage('email') }}
+                    </small>
+                    }
+                </div>
+                <div class="flex flex-column gap-2">
+                    <label for="password" class="font-semibold text-900">
+                        Password
+                    </label>    
+                    <p-password inputId="password" formControlName="password" placeholder="Password" [toggleMask]="true"
+                        [feedback]="false" autocomplete="current-password" styleClass="w-full"
+                        inputStyleClass="w-full" />
+                    @if (isFieldInvalid('password')) {
+                    <small class="text-red-500">
+                        {{ getErrorMessage('password') }}
+                    </small>
+                    }
+                </div>
+                <p-button type="submit" label="Accedi" icon="pi pi-sign-in" [loading]="isLoading()"
+                    [disabled]="loginForm.invalid || isLoading()" styleClass="w-full" />
+                <div class="text-center mt-3">
+                    <span class="text-600">
+                        Non hai un account?
+                    </span>
+                    <a routerLink="/auth/register" class="text-primary font-semibold ml-2 cursor-pointer no-underline">
+                        Registrati
+                    </a>
+                </div>
+            </form>
+        </p-card>
+    </div>
+</div>

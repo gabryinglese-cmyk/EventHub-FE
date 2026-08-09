@@ -1,0 +1,139 @@
+<div class="flex justify-content-center align-items-center min-h-screen w-full p-4">
+
+    <div class="w-full md:w-30rem">
+
+        <p-card>
+
+            <ng-template pTemplate="header">
+
+                <div class="pt-5 px-5">
+
+                    <h1 class="text-4xl md:text-5xl font-bold text-900 m-0 text-center">
+                        Crea account
+                    </h1>
+
+                    <p class="text-600 text-lg mt-3 mb-0 text-center">
+                        Entra a far parte di EventHub
+                    </p>
+
+                </div>
+
+            </ng-template>
+
+
+            <form [formGroup]="registerForm" (ngSubmit)="register()" class="flex flex-column gap-4 p-3 md:p-5">
+
+                @if (errorMessage) {
+
+                <p-message severity="error" [text]="errorMessage" styleClass="w-full" />
+
+                }
+
+
+                <div class="grid">
+
+                    <div class="col-12 md:col-6 flex flex-column gap-2">
+
+                        <label for="firstName" class="font-semibold text-900">
+                            Nome
+                        </label>
+
+                        <input pInputText id="firstName" type="text" formControlName="firstName" placeholder="Mario"
+                            autocomplete="given-name" class="w-full" />
+
+                        @if (isFieldInvalid('firstName')) {
+
+                        <small class="text-red-500">
+                            {{ getErrorMessage('firstName') }}
+                        </small>
+
+                        }
+
+                    </div>
+
+
+                    <div class="col-12 md:col-6 flex flex-column gap-2">
+
+                        <label for="lastName" class="font-semibold text-900">
+                            Cognome
+                        </label>
+
+                        <input pInputText id="lastName" type="text" formControlName="lastName" placeholder="Rossi"
+                            autocomplete="family-name" class="w-full" />
+
+                        @if (isFieldInvalid('lastName')) {
+
+                        <small class="text-red-500">
+                            {{ getErrorMessage('lastName') }}
+                        </small>
+
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <div class="flex flex-column gap-2">
+
+                    <label for="email" class="font-semibold text-900">
+                        Email
+                    </label>
+
+                    <input pInputText id="email" type="email" formControlName="email" placeholder="nome@email.com"
+                        autocomplete="email" class="w-full" />
+
+                    @if (isFieldInvalid('email')) {
+
+                    <small class="text-red-500">
+                        {{ getErrorMessage('email') }}
+                    </small>
+
+                    }
+
+                </div>
+
+
+                <div class="flex flex-column gap-2">
+
+                    <label for="password" class="font-semibold text-900">
+                        Password
+                    </label>
+
+                    <p-password id="password" formControlName="password" placeholder="Password" [toggleMask]="true"
+                        [feedback]="true" autocomplete="new-password" styleClass="w-full" inputStyleClass="w-full" />
+
+                    @if (isFieldInvalid('password')) {
+
+                    <small class="text-red-500">
+                        {{ getErrorMessage('password') }}
+                    </small>
+
+                    }
+
+                </div>
+
+
+                <p-button type="submit" label="Registrati" icon="pi pi-user-plus" [loading]="isLoading"
+                    [disabled]="registerForm.invalid || isLoading" styleClass="w-full" />
+
+
+                <div class="text-center mt-3">
+
+                    <span class="text-600">
+                        Hai già un account?
+                    </span>
+
+                    <a routerLink="/auth/login" class="text-primary font-semibold ml-2 cursor-pointer no-underline">
+                        Accedi
+                    </a>
+
+                </div>
+
+            </form>
+
+        </p-card>
+
+    </div>
+
+</div>

@@ -1,0 +1,105 @@
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# ============================================================
+# Angular
+# ============================================================
+
+# Angular build output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Angular cache
+/.angular/cache
+
+# Sass cache
+.sass-cache/
+
+# Coverage reports
+/coverage
+
+
+# ============================================================
+# Node.js / npm
+# ============================================================
+
+# Dependencies
+/node_modules/
+
+# npm / yarn / pnpm logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# npm cache / local package manager files
+.npm/
+
+
+# ============================================================
+# Environment variables / local configuration
+# ============================================================
+
+# Environment files containing local configuration or secrets
+.env
+.env.*
+!.env.example
+
+
+# ============================================================
+# Visual Studio Code
+# ============================================================
+
+# Ignore VS Code workspace files by default
+.vscode/*
+
+# Keep shared project configuration
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# VS Code history
+.history/
+
+
+# ============================================================
+# IntelliJ / JetBrains
+# ============================================================
+
+.idea/
+*.iml
+
+
+# ============================================================
+# Other IDEs
+# ============================================================
+
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+
+# ============================================================
+# System files
+# ============================================================
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+
+# ============================================================
+# Miscellaneous generated files
+# ============================================================
+
+/typings
+/connect.lock
+/libpeerconnection.log
+testem.log

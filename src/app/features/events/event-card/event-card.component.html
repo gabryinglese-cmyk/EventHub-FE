@@ -1,0 +1,57 @@
+<p-card styleClass="h-full shadow-2 border-round-xl"
+    [style]="{ 'background': '#cfd1d4', 'border': '1px solid #85898f', 'border-radius': '0.75rem', 'overflow': 'hidden'}">
+    <ng-template pTemplate="header">
+        <div class="flex align-items-center justify-content-between px-4 py-3" style="background: #30343b;">
+            <span class="text-sm font-semibold text-white">
+                <i class="pi pi-calendar mr-2"></i>
+                {{ event().createdAt | date:'dd/MM/yyyy' }}
+            </span>
+            <p-tag value="Evento" [severity]="getEventSeverity()" />
+        </div>
+    </ng-template>
+
+    <div class="flex flex-column h-full gap-3">
+        <h3 class="text-xl font-bold text-900 m-0">
+            {{ event().title }}
+        </h3>
+        <div class="flex flex-column gap-3 text-700 text-sm">
+            <div class="flex align-items-center gap-3">
+                <i class="pi pi-clock text-600"></i>
+                <span>
+                    {{ event().dateTime | date:'dd/MM/yyyy HH:mm' }}
+                </span>
+            </div>
+            <div class="flex align-items-center gap-3">
+                <i class="pi pi-map-marker text-600"></i>
+                <span>
+                    {{ event().location }}
+                </span>
+            </div>
+            <div class="flex align-items-center gap-3">
+                <i class="pi pi-users text-600"></i>
+                <span>
+                    {{ event().maxCapacity }} partecipanti
+                </span>
+            </div>
+        </div>
+        <div class="border-top-1 my-2" style="border-color: #999da3;">
+        </div>
+        <p class="text-700 text-sm line-height-3 m-0 flex-1">
+            {{event().description ||'Nessuna descrizione disponibile'}}
+        </p>
+        <div class="flex flex-column gap-2 mt-auto">
+            <p-button label="Visualizza dettagli" icon="pi pi-eye" [outlined]="true" severity="secondary"
+                styleClass="w-full" (onClick)="onView()" />
+            <div class="grid">
+                <div class="col-6">
+                    <p-button icon="pi pi-pencil" severity="secondary" [outlined]="true" styleClass="w-full"
+                        (onClick)="onEdit()" ariaLabel="Modifica evento" />
+                </div>
+                <div class="col-6">
+                    <p-button icon="pi pi-trash" severity="danger" [outlined]="true" styleClass="w-full"
+                        (onClick)="onDelete()" ariaLabel="Elimina evento" />
+                </div>
+            </div>
+        </div>
+    </div>
+</p-card>

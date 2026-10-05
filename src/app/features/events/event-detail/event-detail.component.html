@@ -1,0 +1,100 @@
+<div class="min-h-screen surface-ground">
+    <div class="max-w-5xl mx-auto px-4 md:px-6 py-5">
+        <p-button label="Torna agli eventi" icon="pi pi-arrow-left" severity="secondary" [text]="true"
+            (onClick)="goBack()" />
+        @if (isLoading()) {
+        <div class="flex justify-content-center py-8">
+            <p-progressSpinner ariaLabel="Caricamento evento" />
+        </div>
+        }
+
+        @if (errorMessage()) {
+        <p-message severity="error" [text]="errorMessage()!" styleClass="w-full mt-4" />
+        }
+        @if (event(); as currentEvent) {
+        <p-card styleClass="mt-4">
+            <div class="flex flex-column gap-5">
+                <div class="flex flex-column md:flex-row justify-content-between gap-4">
+                    <div>
+                        <div class="flex align-items-center gap-2 mb-3">
+                            <i class="pi pi-calendar text-primary text-2xl"></i>
+                            <p-tag value="Evento" severity="success" />
+                        </div>
+                        <h1 class="text-4xl font-bold text-900 m-0">
+                            {{ currentEvent.title }}
+                        </h1>
+                    </div>
+                    <div class="flex gap-2">
+                        <p-button label="Prenota" icon="pi pi-ticket" (onClick)="bookEvent()" />
+                    </div>
+                </div>
+
+                <div class="grid">
+                    <div class="col-12 md:col-4">
+                        <div class="surface-ground border-round p-4 h-full">
+                            <i class="pi pi-calendar text-primary text-xl"></i>
+                            <div class="text-600 mt-2">
+                                Data
+                            </div>
+                            <div class="font-semibold text-900 mt-1">
+                                {{ currentEvent.dateTime | date:'dd/MM/yyyy HH:mm' }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-4">
+                        <div class="surface-ground border-round p-4 h-full">
+                            <i class="pi pi-map-marker text-primary text-xl"></i>
+                            <div class="text-600 mt-2">
+                                Località
+                            </div>
+                            <div class="font-semibold text-900 mt-1">
+                                {{ currentEvent.location }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-4">
+                        <div class="surface-ground border-round p-4 h-full">
+
+                            <i class="pi pi-users text-primary text-xl"></i>
+                            <div class="text-600 mt-2">
+                                Capacità
+                            </div>
+                            <div class="font-semibold text-900 mt-1">
+                                {{ currentEvent.maxCapacity }}
+                                partecipanti
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-900">
+                        Descrizione
+                    </h2>
+                    <p class="text-700 line-height-3">
+                        {{
+                        currentEvent.description ||
+                        'Nessuna descrizione disponibile.'
+                        }}
+                    </p>
+                </div>
+
+                <div class="border-top-1 surface-border pt-4">
+                    <div class="flex align-items-center gap-3">
+                        <i class="pi pi-user text-primary text-xl"></i>
+                        <div>1
+                            <div class="text-600">
+                                Organizzato da
+                            </div>
+
+                            <div class="font-semibold text-900">
+                                {{ currentEvent.createdBy.email }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </p-card>
+        }
+    </div>
+</div>

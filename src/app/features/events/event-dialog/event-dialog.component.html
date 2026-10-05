@@ -1,0 +1,117 @@
+<p-dialog [header]="event ? 'Modifica evento' : 'Nuovo evento'" [(visible)]="visible" (onHide)="close()" [modal]="true"
+    [draggable]="false" [resizable]="false" [closable]="true" [dismissableMask]="true" [style]="{
+        width: '95vw',
+        maxWidth: '700px'
+    }" [contentStyle]="{
+        maxHeight: 'calc(100vh - 12rem)',
+        overflowY: 'auto',
+        overflowX: 'hidden'
+    }">
+
+    <form [formGroup]="eventForm" (ngSubmit)="save()" class="flex flex-column gap-3 pt-1">
+        @if (errorMessage()) {
+        <p-message severity="error" [text]="errorMessage()!" styleClass="w-full" />
+        }
+
+        <div class="flex flex-column gap-2">
+            <label for="eventTitle" class="font-semibold text-white">
+                Titolo
+            </label>
+            <input pInputText id="eventTitle" formControlName="title" placeholder="Es. Concerto Rock" maxlength="200"
+                class="w-full border-round-lg" style="
+                    background: #ffffff;
+                    color: #18181b;
+                    border-color: #a1a1aa;
+                " />
+            @if (isFieldInvalid('title')) {
+            <small class="text-white">
+                @if (eventForm.controls.title.hasError('required')) {
+                Il titolo è obbligatorio.
+                }
+                @if (eventForm.controls.title.hasError('minlength')) {
+                Il titolo deve avere almeno 3 caratteri.
+                }
+                @if (eventForm.controls.title.hasError('maxlength')) {
+                Il titolo non può superare 200 caratteri.
+                }
+            </small>
+            }
+        </div>
+
+        <div class="flex flex-column gap-2">
+            <label for="eventDescription" class="font-semibold text-white">
+                Descrizione
+            </label>
+            <textarea pInputTextarea id="eventDescription" formControlName="description" rows="4" maxlength="2000"
+                placeholder="Descrivi l'evento..." class="w-full border-round-lg" style="
+                    background: #ffffff;
+                    color: #18181b;
+                    border-color: #a1a1aa;
+                "></textarea>
+            @if (isFieldInvalid('description')) {
+            <small class="text-white">
+                La descrizione non può superare 2000 caratteri.
+            </small>
+            }
+        </div>
+
+        <div class="grid">
+            <div class="col-12 md:col-6">
+                <div class="flex flex-column gap-2">
+                    <label for="eventDate" class="font-semibold text-white">
+                        Data e ora
+                    </label>
+                    <p-datePicker inputId="eventDate" formControlName="dateTime" [showTime]="true" hourFormat="24"
+                        dateFormat="dd/mm/yy" placeholder="Seleziona data e ora" [showIcon]="true"
+                        styleClass="w-full border-round-lg" inputStyleClass="w-full border-round-lg" />
+                    @if (isFieldInvalid('dateTime')) {
+                    <small class="text-white">
+                        Data e ora sono obbligatorie.
+                    </small>
+                    }
+                </div>
+            </div>
+
+            <div class="col-12 md:col-6">
+                <div class="flex flex-column gap-2">
+                    <label for="eventCapacity" class="font-semibold text-white">
+                        Capacità massima
+                    </label>
+                    <p-inputNumber inputId="eventCapacity" formControlName="maxCapacity" [min]="1" [showButtons]="true"
+                        buttonLayout="stacked" styleClass="w-full" />
+                    @if (isFieldInvalid('maxCapacity')) {
+                    <small class="text-white">
+                        La capacità deve essere maggiore di zero.
+                    </small>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-column gap-2">
+            <label for="eventLocation" class="font-semibold text-white">
+                Località
+            </label>
+            <input pInputText id="eventLocation" formControlName="location" placeholder="Es. Torino"
+                class="w-full border-round-lg" style="
+                    background: #ffffff;
+                    color: #18181b;
+                    border-color: #a1a1aa;
+                " />
+            @if (isFieldInvalid('location')) {
+            <small class="text-white">
+                La località è obbligatoria.
+            </small>
+            }
+        </div>
+
+        <div class="flex flex-column sm:flex-row justify-content-end gap-2 pt-3 mt-1"
+            style="border-top: 1px solid #d4d4d8;">
+            <p-button type="button" label="Annulla" severity="secondary" [outlined]="true" [disabled]="isSaving()"
+                [style]="{color: '#27272a', borderColor: '#71717a', background: '#e4e4e7'}" (onClick)="close()" />
+            <p-button type="submit" [label]="event ? 'Salva modifiche' : 'Crea evento'"
+                [icon]="event ? 'pi pi-save' : 'pi pi-plus'" [loading]="isSaving()"
+                [disabled]="eventForm.invalid || isSaving()" />
+        </div>
+    </form>
+</p-dialog>

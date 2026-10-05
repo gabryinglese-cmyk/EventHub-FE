@@ -1,0 +1,77 @@
+<p-card styleClass="flex-1 overflow-hidden">
+    <ng-template pTemplate="header">
+
+        <div class="p-3 pb-0">
+            <div class="text-xl font-bold text-900">
+                La tua prenotazione
+            </div>
+            <div class="text-600 mt-1">
+                Seleziona quanti biglietti vuoi prenotare.
+            </div>
+        </div>
+    </ng-template>
+
+    <form [formGroup]="bookingForm()" (ngSubmit)="submitted.emit()" class="flex flex-column gap-3 h-full">
+        <div class="flex flex-column gap-2">
+            <label for="numberOfTickets" class="font-semibold text-900">
+                Numero di biglietti
+            </label>
+            <p-inputNumber inputId="numberOfTickets" formControlName="numberOfTickets" [showButtons]="true"
+                buttonLayout="horizontal" spinnerMode="horizontal" [min]="1" [max]="event().maxCapacity" [step]="1"
+                incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" styleClass="w-full"
+                inputStyleClass="w-full text-center" />
+            @if (isFieldInvalid()) {
+            <small class="text-red-500">
+                @if (ticketsControl.hasError('required')) {
+                Inserisci il numero di biglietti.
+                }
+                @else if (ticketsControl.hasError('min')) {
+                Devi prenotare almeno un biglietto.
+                }
+                @else if (ticketsControl.hasError('max')) {
+                Non puoi prenotare più di
+                {{ event().maxCapacity }}
+                biglietti.
+                }
+            </small>
+            }
+        </div>
+        <p-divider />
+        <div class="flex flex-column gap-2">
+            <div class="text-lg font-semibold text-900">
+                Riepilogo prenotazione
+            </div>
+            <div class="flex justify-content-between">
+                <span class="text-600">
+                    Evento
+                </span>
+                <span class="font-semibold text-900">
+                    {{ event().title }}
+                </span>
+            </div>
+            <div class="flex justify-content-between">
+                <span class="text-600">
+                    Biglietti
+                </span>
+                <span class="font-semibold text-900">
+                    {{ ticketsControl.value }}
+                </span>
+            </div>
+            <div class="flex justify-content-between">
+                <span class="text-600">
+                    Capacità massima
+                </span>
+                <span class="font-semibold text-900">
+                    {{ event().maxCapacity }}
+                </span>
+            </div>
+        </div>
+        <p-message severity="info" text="La prenotazione verrà associata al tuo account." />
+        <div class="flex flex-column gap-2 mt-auto">
+            <p-button type="submit" label="Conferma prenotazione" icon="pi pi-check" styleClass="w-full"
+                [loading]="isSubmitting()" [disabled]="bookingForm().invalid || isSubmitting()" />
+            <p-button type="button" label="Annulla" icon="pi pi-times" severity="secondary" [outlined]="true"
+                styleClass="w-full" [disabled]="isSubmitting()" (onClick)="cancelled.emit()" />
+        </div>
+    </form>
+</p-card>

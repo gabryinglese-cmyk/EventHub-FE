@@ -1,0 +1,84 @@
+<p-card styleClass="flex-1 overflow-hidden">
+    <ng-template pTemplate="header">
+        <div class="p-3 pb-0">
+            <div class="flex align-items-center justify-content-between gap-3">
+                <div class="text-xl font-bold text-900">
+                    Riepilogo evento
+                </div>
+                <p-tag value="Evento" severity="info" icon="pi pi-calendar" />
+            </div>
+        </div>
+    </ng-template>
+
+    <div class="flex flex-column gap-3 h-full">
+        <div>
+            <div class="text-2xl font-bold text-900">
+                {{ event().title }}
+            </div>
+            @if (event().description) {
+            <div class="text-600 line-height-3 mt-2">
+                {{ event().description }}
+            </div>
+            }
+        </div>
+        <p-divider />
+
+        <div class="grid">
+            <div class="col-12 md:col-6">
+                <div class="flex align-items-start gap-3">
+                    <i class="pi pi-calendar text-primary text-xl"></i>
+                    <div>
+                        <div class="text-500 text-sm">
+                            Data e ora
+                        </div>
+                        <div class="font-semibold text-900 mt-1">
+                            {{ event().dateTime | date:'dd/MM/yyyy HH:mm' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-6">
+                <div class="flex align-items-start gap-3">
+                    <i class="pi pi-map-marker text-primary text-xl"></i>
+                    <div>
+                        <div class="text-500 text-sm">
+                            Location
+                        </div>
+                        <div class="font-semibold text-900 mt-1">
+                            {{ event().location }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-6">
+                <div class="flex align-items-start gap-3">
+                    <i class="pi pi-users text-primary text-xl"></i>
+                    <div>
+                        <div class="text-500 text-sm">
+                            Capacità
+                        </div>
+                        <div class="font-semibold text-900 mt-1">
+                            {{ event().maxCapacity }} persone
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-6">
+                <div class="flex align-items-start gap-3">
+                    <i class="pi pi-user text-primary text-xl"></i>
+                    <div>
+                        <div class="text-500 text-sm">
+                            Organizzatore
+                        </div>
+                        <div class="font-semibold text-900 mt-1">
+                            {{ event().createdBy.email }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</p-card>

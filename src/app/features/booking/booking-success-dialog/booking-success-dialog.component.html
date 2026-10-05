@@ -1,0 +1,46 @@
+<p-dialog header="Prenotazione completata" [visible]="visible()" [modal]="true" [closable]="false" [draggable]="false"
+    [resizable]="false" [style]="{ width: 'min(90vw, 32rem)' }" (onHide)="visibleChange.emit(false)">
+    <div class="flex flex-column align-items-center text-center gap-4">
+        <div class="flex align-items-center justify-content-center border-circle bg-green-100"
+            style="width: 5rem; height: 5rem;">
+            <i class="pi pi-check text-green-600 text-4xl"></i>
+        </div>
+
+        <div class="flex flex-column gap-2">
+            <div class="text-2xl font-bold text-900">
+                Prenotazione effettuata!
+            </div>
+            <div class="text-600 line-height-3">
+                La tua prenotazione per
+                <strong>
+                    {{ event()?.title }}
+                </strong>
+            </div>
+        </div>
+
+        <p-divider styleClass="w-full" />
+        <div class="flex align-items-start gap-3 w-full text-left">
+            <div class="flex align-items-center justify-content-center border-circle bg-blue-100 flex-shrink-0"
+                style="width: 2.75rem; height: 2.75rem;">
+                <i class="pi pi-ticket text-blue-600 text-xl"></i>
+            </div>
+            <div>
+                <div class="font-semibold text-900">
+                    Prenotazione salvata
+                </div>
+                <div class="text-600 mt-1 line-height-3">
+                    La tua prenotazione è stata registrata
+                    correttamente. Puoi visualizzarne
+                    tutti i dettagli nella pagina della prenotazione.
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-column gap-2 w-full mt-2">
+            <p-button label="Visualizza prenotazione" icon="pi pi-ticket" styleClass="w-full"
+                (onClick)="viewBooking.emit()" />
+            <p-button label="Torna agli eventi" icon="pi pi-calendar" severity="secondary" [outlined]="true"
+                styleClass="w-full" (onClick)="backToEvents.emit()" />
+        </div>
+    </div>
+</p-dialog>

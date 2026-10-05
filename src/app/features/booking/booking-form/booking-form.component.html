@@ -1,0 +1,46 @@
+<div class="h-screen w-full overflow-hidden flex flex-column p-3 md:p-5">
+    <div class="flex align-items-center justify-content-between mb-4 flex-shrink-0">
+        <div>
+            <div class="text-3xl font-bold text-900">
+                Prenota evento
+            </div>
+            <div class="text-600 mt-2">
+                Completa la prenotazione scegliendo il numero di biglietti.
+            </div>
+        </div>
+        <p-button label="Indietro" icon="pi pi-arrow-left" severity="secondary" [text]="true" routerLink="/events" />
+    </div>
+
+    @if (isLoading()) {
+    <div class="flex flex-1 flex-column align-items-center justify-content-center">
+        <p-progressSpinner strokeWidth="4" ariaLabel="Caricamento evento" />
+        <div class="text-600 mt-3">
+            Caricamento evento...
+        </div>
+    </div>
+    }
+
+    @else if (errorMessage()) {
+    <div class="flex flex-1 flex-column align-items-center justify-content-center">
+        <p-message severity="error" [text]="errorMessage()!" styleClass="w-full mb-4" />
+        <p-button label="Torna agli eventi" icon="pi pi-arrow-left" routerLink="/events" />
+    </div>
+    }
+
+    @else if (isAlreadyBooked()) {
+    <div class="flex flex-1 align-items-center justify-content-center">
+        <app-booking-already-booked />
+    </div>
+    }
+
+    @else if (event()) {
+    <div class="flex flex-column gap-3 flex-1 min-h-0">
+        <app-booking-event-summary [event]="event()!" />
+        <app-booking-form-card [event]="event()!" [bookingForm]="bookingForm" [isSubmitting]="isSubmitting()"
+            (submitted)="submitBooking()" (cancelled)="cancel()" />
+    </div>
+    }
+</div>
+
+<app-booking-success-dialog [(visible)]="showSuccessDialog" [event]="event()" (viewBooking)="viewBooking()"
+    (backToEvents)="backToEvents()" />

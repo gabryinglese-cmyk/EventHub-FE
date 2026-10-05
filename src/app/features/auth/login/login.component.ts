@@ -61,7 +61,6 @@ export class LoginComponent {
 
 
   login(): void {
-
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
@@ -69,7 +68,6 @@ export class LoginComponent {
 
     this.isLoading.set(true);
     this.errorMessage.set(undefined);
-
 
     this.authService
       .login(this.loginForm.getRawValue())
@@ -81,19 +79,14 @@ export class LoginComponent {
       )
       .subscribe({
         next: () => {
-          const returnUrl =
-            this.route.snapshot.queryParamMap
-              .get('returnUrl');
+          const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+          const valid = this.isValidReturnUrl(returnUrl);
+          const destination = valid ? returnUrl! : '/events';
 
-          this.router.navigateByUrl(
-            this.isValidReturnUrl(returnUrl)
-              ? returnUrl!
-              : '/events'
-          );
+          this.router.navigateByUrl(destination);
         },
 
         error: (error: HttpErrorResponse) => {
-
           this.errorMessage.set(
             this.parseAuthError(error)
           );
@@ -102,80 +95,52 @@ export class LoginComponent {
   }
 
 
-  isFieldInvalid(
-    field: 'email' | 'password'
-  ): boolean {
-
-    const control =
-      this.loginForm.controls[field];
-
+  isFieldInvalid(field: 'email' | 'password'): boolean {
+    const control = this.loginForm.controls[field];
 
     return control.invalid &&
       (control.dirty || control.touched);
   }
 
 
-  getErrorMessage(
-    field: 'email' | 'password'
-  ): string {
-
-    const control =
-      this.loginForm.controls[field];
-
-
+  getErrorMessage(field: 'email' | 'password'): string {
+    const control = this.loginForm.controls[field];
     if (control.hasError('required')) {
-
       return field === 'email'
         ? 'Email obbligatoria'
         : 'Password obbligatoria';
     }
 
-
     if (control.hasError('email')) {
-
       return 'Inserisci una email valida';
     }
 
-
     if (control.hasError('minlength')) {
-
       return 'La password deve avere almeno 8 caratteri';
     }
-
 
     return '';
   }
 
 
-  private parseAuthError(
-    error: HttpErrorResponse
-  ): string {
-
+  private parseAuthError(error: HttpErrorResponse): string {
     if (error.status === 401) {
-
       return 'Email o password non corretti';
     }
 
-
     if (error.status === 429) {
-
       return 'Troppi tentativi. Riprova più tardi';
     }
 
-
     if (error.error?.message) {
-
       return error.error.message;
     }
-
 
     return 'Errore durante il login';
   }
 
 
-  private isValidReturnUrl(
-    returnUrl: string | null
-  ): boolean {
+  private isValidReturnUrl(returnUrl: string | null): boolean {
 
     if (!returnUrl) {
       return false;

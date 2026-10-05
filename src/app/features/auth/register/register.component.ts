@@ -124,39 +124,28 @@ export class RegisterComponent {
 
 
   register(): void {
-
     if (this.registerForm.invalid) {
-
       this.registerForm.markAllAsTouched();
-
       return;
     }
 
-
     this.isLoading = true;
-
     this.errorMessage = null;
-
 
     this.authService
       .register(this.registerForm.getRawValue())
       .pipe(
-
         takeUntilDestroyed(this.destroyRef),
-
         finalize(() => {
           this.isLoading = false;
         })
       )
       .subscribe({
-
         next: () => {
-
           this.router.navigate(['/events']);
         },
 
         error: (error: HttpErrorResponse) => {
-
           this.errorMessage =
             this.parseRegisterError(error);
         }
@@ -164,17 +153,8 @@ export class RegisterComponent {
   }
 
 
-  isFieldInvalid(
-    field:
-      | 'firstName'
-      | 'lastName'
-      | 'email'
-      | 'password'
-  ): boolean {
-
-    const control =
-      this.registerForm.controls[field];
-
+  isFieldInvalid(field: | 'firstName' | 'lastName' | 'email' | 'password'): boolean {
+    const control = this.registerForm.controls[field];
 
     return control.invalid &&
       (control.dirty || control.touched);
@@ -182,21 +162,13 @@ export class RegisterComponent {
 
 
   getErrorMessage(
-    field:
-      | 'firstName'
-      | 'lastName'
-      | 'email'
-      | 'password'
-  ): string {
-
+    field: | 'firstName' | 'lastName' | 'email' | 'password'): string {
     const control =
       this.registerForm.controls[field];
 
 
     if (control.hasError('required')) {
-
       switch (field) {
-
         case 'firstName':
           return 'Nome obbligatorio';
 
@@ -213,7 +185,6 @@ export class RegisterComponent {
 
 
     if (control.hasError('minlength')) {
-
       if (
         field === 'firstName' ||
         field === 'lastName'
@@ -221,48 +192,35 @@ export class RegisterComponent {
         return 'Inserisci almeno 2 caratteri';
       }
 
-
       if (field === 'password') {
         return 'La password deve avere almeno 8 caratteri';
       }
     }
 
-
     if (control.hasError('email')) {
-
       return 'Inserisci una email valida';
     }
-
-
     return '';
   }
 
 
-  private parseRegisterError(
-    error: HttpErrorResponse
-  ): string {
-
+  private parseRegisterError(error: HttpErrorResponse): string {
     if (error.status === 409) {
-
       return 'Esiste già un account con questa email';
     }
 
 
     if (error.status === 400) {
-
       if (error.error?.message) {
         return error.error.message;
       }
-
       return 'I dati inseriti non sono validi';
     }
 
 
     if (error.error?.message) {
-
       return error.error.message;
     }
-
 
     return 'Errore durante la registrazione';
   }
